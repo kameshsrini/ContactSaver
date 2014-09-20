@@ -3,12 +3,18 @@ package com.contact.saver.ui.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.eclipse.swt.internal.win32.MCHITTESTINFO;
 
 import com.contact.saver.ui.FileHelper;
 import com.contact.saver.ui.model.Contact;
@@ -38,9 +44,10 @@ public final class ContactController implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
+		mUI.colorReset();
 		if (ADD_COMMAND.equals(command)) {
-			boolean m = validateInputFields();
-			if (m && !isContactAlreadyThere()) {
+			
+			if (validateInputFields() && !isContactAlreadyThere()) {
 				// check if the FN, LN, MIDDLE is already there.
 				performAdd();
 			}
@@ -50,9 +57,9 @@ public final class ContactController implements ActionListener,
 		} else if (RESET_COMMAND.equals(command)) {
 			mUI.formReset();
 		} else if (MODIFY_COMMAND.equals(command)) {
-			if (validateInputFields()) {
+			if (validateInputFields() && !isContactAlreadyThere()) {
 				performDelete();
-				performAdd();
+				performAdd();	
 			}
 		}
 	}
@@ -184,6 +191,7 @@ public final class ContactController implements ActionListener,
 		Contact contact = new Contact(contactName, contactAddress, phoneNumber,
 				isMale);
 		mContactList.addElement(contact);
+		sort();
 		mFileHelper.addContact(contact);
 
 		/* Reset as we have added this contact. */
@@ -201,9 +209,29 @@ public final class ContactController implements ActionListener,
 
 	public ListModel<Contact> getAllContacts() {
 		List<Contact> contacts = mFileHelper.getAllContacts();
+		mContactList.clear();
 		for (Contact contact : contacts) {
 			mContactList.addElement(contact);
 		}
+		sort();
 		return mContactList;
+	}
+	
+   void sort() {
+	   List<Contact> contacts = new ArrayList<Contact>();
+	   for (int i=0; i<mContactList.getSize(); i++) {
+			contacts.add(mContactList.get(i));
+	   }
+	   Collections.sort(contacts, new Comparator<Contact>() {
+			public int compare(Contact contact1, Contact contact2) {
+				String o1 = contact1.mContactName.mFirstName + contact1.mContactName.mLastName + contact1.mContactName.mMiddleInitial;
+				String o2 = contact2.mContactName.mFirstName + contact2.mContactName.mLastName + contact2.mContactName.mMiddleInitial;
+				return o1.compareTo(o2);
+			}
+	   });
+	   mContactList.clear();
+		for (Contact contact : contacts) {
+			mContactList.addElement(contact);
+		}
 	}
 }

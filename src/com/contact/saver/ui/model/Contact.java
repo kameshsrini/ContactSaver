@@ -1,6 +1,8 @@
 package com.contact.saver.ui.model;
 
-public final class Contact {
+import java.util.Comparator;
+
+public final class Contact  {
 	 public final ContactName mContactName;
 	 public final ContactAddress mContactAddress;
      public final String mPhoneNumber;
@@ -28,7 +30,7 @@ public final class Contact {
  		
  		builder.append(mPhoneNumber.trim()).append("|");
  		builder.append(mIsMale);
- 		return builder.toString();
-     }
+		return builder.toString();
+	}
 
 }

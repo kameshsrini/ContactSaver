@@ -81,18 +81,18 @@ public final class ContactUserInterface {
 
 	private void initializeScrollList() {
 		mScrollPane = new JScrollPane();
-		mScrollPane.setBounds(84, 292, 428, 70);
+		mScrollPane.setBounds(84, 302, 428, 70);
 		mContactUserInterfaceFrame.getContentPane().add(mScrollPane);
-
-		mContactListView = new JList<Contact>();
-		mScrollPane.setViewportView(mContactListView);
-		mListViewFirstNameLabel.setLabelFor(mContactListView);
-
-		mContactListView.addListSelectionListener(mContactController);
-		mContactListView.setVisibleRowCount(10);
-		mContactListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mContactListView.setCellRenderer(new MultiCellRenderer());
-		mContactListView.setModel(mContactController.getAllContacts());
+		
+				mContactListView = new JList<Contact>();
+				mScrollPane.setViewportView(mContactListView);
+				mListViewFirstNameLabel.setLabelFor(mContactListView);
+				
+						mContactListView.addListSelectionListener(mContactController);
+						mContactListView.setVisibleRowCount(10);
+						mContactListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						mContactListView.setCellRenderer(new MultiCellRenderer());
+						mContactListView.setModel(mContactController.getAllContacts());
 
 	}
 
@@ -114,7 +114,7 @@ public final class ContactUserInterface {
 		mFormResetButton.setForeground(Color.BLACK);
 		mFormResetButton.setActionCommand(ContactController.RESET_COMMAND);
 		mFormResetButton.addActionListener(mContactController);
-		mFormResetButton.setBounds(404, 213, 108, 37);
+		mFormResetButton.setBounds(403, 238, 108, 37);
 		mContactUserInterfaceFrame.getContentPane().add(mFormResetButton);
 
 		mModifyButton = new JButton("MODIFY");
@@ -127,13 +127,13 @@ public final class ContactUserInterface {
 	private void initializeRadioButtons() {
 		mMaleRadioButton = new JRadioButton("M");
 		mMaleRadioButton.setActionCommand(ContactController.SET_MALE_COMMAND);
-		mMaleRadioButton.setBounds(202, 236, 39, 14);
+		mMaleRadioButton.setBounds(202, 261, 39, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mMaleRadioButton);
 
 		mFemaleRadioButton = new JRadioButton("F");
 		mFemaleRadioButton
 				.setActionCommand(ContactController.SET_FEMALE_COMMAND);
-		mFemaleRadioButton.setBounds(255, 236, 33, 14);
+		mFemaleRadioButton.setBounds(255, 261, 33, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mFemaleRadioButton);
 
 		mGenderButtonGroup = new ButtonGroup();
@@ -144,44 +144,44 @@ public final class ContactUserInterface {
 	private void initializeTextFields() {
 
 		mFirstNameTextField = new JTextField();
-		mFirstNameTextField.setBounds(202, 33, 153, 20);
+		mFirstNameTextField.setBounds(202, 55, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mFirstNameTextField);
 		mFirstNameTextField.setColumns(10);
 		mFirstNameTextField.setDocument(new UIServices(20));
 
 		mLastNameTextField = new JTextField();
-		mLastNameTextField.setBounds(202, 58, 153, 20);
+		mLastNameTextField.setBounds(202, 80, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameTextField);
 		mLastNameTextField.setColumns(10);
 		mLastNameTextField.setDocument(new UIServices(20));
 
 		mMiddleInitialTextField = new JTextField();
-		mMiddleInitialTextField.setBounds(484, 33, 28, 20);
+		mMiddleInitialTextField.setBounds(484, 52, 28, 20);
 		mContactUserInterfaceFrame.getContentPane()
 				.add(mMiddleInitialTextField);
 		mMiddleInitialTextField.setColumns(10);
 		mMiddleInitialTextField.setDocument(new UIServices(1));
 
 		mAddressLine1TextField = new JTextField();
-		mAddressLine1TextField.setBounds(202, 83, 310, 20);
+		mAddressLine1TextField.setBounds(202, 105, 310, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine1TextField);
 		mAddressLine1TextField.setColumns(10);
 		mAddressLine1TextField.setDocument(new UIServices(35));
 
 		mAddressLine2TextField = new JTextField();
-		mAddressLine2TextField.setBounds(202, 108, 310, 20);
+		mAddressLine2TextField.setBounds(202, 130, 310, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine2TextField);
 		mAddressLine2TextField.setColumns(10);
 		mAddressLine2TextField.setDocument(new UIServices(35));
 
 		mCityTextField = new JTextField();
-		mCityTextField.setBounds(202, 133, 86, 20);
+		mCityTextField.setBounds(202, 155, 86, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mCityTextField);
 		mCityTextField.setColumns(10);
 		mCityTextField.setDocument(new UIServices(25));
 
 		mStateTextField = new JTextField();
-		mStateTextField.setBounds(202, 158, 39, 20);
+		mStateTextField.setBounds(202, 180, 39, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mStateTextField);
 		mStateTextField.setColumns(10);
 		mStateTextField.setDocument(new UIServices(2));
@@ -197,7 +197,7 @@ public final class ContactUserInterface {
 					e.consume();
 			}
 		});
-		mZipCodeTextField.setBounds(202, 183, 86, 20);
+		mZipCodeTextField.setBounds(202, 208, 86, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mZipCodeTextField);
 		mZipCodeTextField.setColumns(10);
 
@@ -212,67 +212,67 @@ public final class ContactUserInterface {
 					e.consume();
 			}
 		});
-		mPhoneNumberTextField.setBounds(202, 208, 153, 20);
+		mPhoneNumberTextField.setBounds(202, 233, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberTextField);
 		mPhoneNumberTextField.setColumns(10);
 	}
 
 	private void initializeLabels() {
 		mFirstNameLabel = new JLabel("FIRST NAME*");
-		mFirstNameLabel.setBounds(84, 36, 108, 14);
+		mFirstNameLabel.setBounds(84, 61, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mFirstNameLabel);
 
 		mLastNameLabel = new JLabel("LAST NAME*");
-		mLastNameLabel.setBounds(84, 61, 108, 14);
+		mLastNameLabel.setBounds(84, 86, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameLabel);
 
 		mMiddleInitialLabel = new JLabel("MIDDLE INITIAL");
-		mMiddleInitialLabel.setBounds(381, 36, 93, 14);
+		mMiddleInitialLabel.setBounds(381, 58, 93, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mMiddleInitialLabel);
 
 		mAddressLine1Label = new JLabel("ADDRESS LINE 1*");
-		mAddressLine1Label.setBounds(84, 86, 108, 14);
+		mAddressLine1Label.setBounds(84, 111, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine1Label);
 
 		mAddressLine2Label = new JLabel("ADDRESS LINE 2");
 		mAddressLine2Label.setForeground(Color.BLACK);
-		mAddressLine2Label.setBounds(84, 111, 108, 14);
+		mAddressLine2Label.setBounds(84, 136, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine2Label);
 
 		mCityLabel = new JLabel("CITY*");
-		mCityLabel.setBounds(84, 136, 46, 14);
+		mCityLabel.setBounds(84, 161, 46, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mCityLabel);
 
 		mStateLabel = new JLabel("STATE*");
-		mStateLabel.setBounds(84, 161, 69, 14);
+		mStateLabel.setBounds(84, 186, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mStateLabel);
 
 		mZipCodeLabel = new JLabel("ZIP CODE*");
-		mZipCodeLabel.setBounds(84, 186, 69, 14);
+		mZipCodeLabel.setBounds(84, 211, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mZipCodeLabel);
 
 		mPhoneNumberLabel = new JLabel("CONTACT NUMBER*");
-		mPhoneNumberLabel.setBounds(84, 211, 118, 14);
+		mPhoneNumberLabel.setBounds(84, 236, 118, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberLabel);
 
 		mGenderLabel = new JLabel("GENDER*");
-		mGenderLabel.setBounds(84, 236, 69, 14);
+		mGenderLabel.setBounds(84, 261, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mGenderLabel);
 
 		mListViewFirstNameLabel = new JLabel("First Name");
 		mListViewFirstNameLabel.setForeground(Color.BLACK);
-		mListViewFirstNameLabel.setBounds(84, 267, 103, 14);
+		mListViewFirstNameLabel.setBounds(84, 286, 103, 14);
 		mContactUserInterfaceFrame.getContentPane()
 				.add(mListViewFirstNameLabel);
 
 		mListViewLastNameLabel = new JLabel("Last Name");
 		mListViewLastNameLabel.setForeground(Color.BLACK);
-		mListViewLastNameLabel.setBounds(227, 267, 61, 14);
+		mListViewLastNameLabel.setBounds(227, 286, 61, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mListViewLastNameLabel);
 
 		mListViewPhoneNumberLabel = new JLabel("Contact Number");
 		mListViewPhoneNumberLabel.setForeground(Color.BLACK);
-		mListViewPhoneNumberLabel.setBounds(337, 267, 103, 14);
+		mListViewPhoneNumberLabel.setBounds(330, 286, 103, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mListViewPhoneNumberLabel);
 
 		mStatusLabel = new JLabel("");
@@ -307,18 +307,7 @@ public final class ContactUserInterface {
 		mPhoneNumberTextField.setText("");
 		mGenderButtonGroup.clearSelection();
 		mContactListView.clearSelection();
-		mFirstNameLabel.setForeground(Color.BLACK);
-		mLastNameLabel.setForeground(Color.BLACK);
-		mMiddleInitialLabel.setForeground(Color.BLACK);
-		mAddressLine1Label.setForeground(Color.BLACK);
-		mCityLabel.setForeground(Color.BLACK);
-		mStateLabel.setForeground(Color.BLACK);
-		mZipCodeLabel.setForeground(Color.BLACK);
-		mPhoneNumberLabel.setForeground(Color.BLACK);
-		mGenderLabel.setForeground(Color.BLACK);
-		mStatusLabel.setText(null);
-		showStatus("Hi Enter, View , or Delete a contact!", false);
-		mStatusLabel.setForeground(Color.magenta);
+		colorReset();
 	}
 
 	public void showContact(Contact contact) {
@@ -344,11 +333,27 @@ public final class ContactUserInterface {
 
 	public void showStatus(String status, boolean error) {
 		if(error != true)
-		mStatusLabel.setText("Message:" + status);
+		mStatusLabel.setText (status);
 		else
 		{
 		mStatusLabel.setForeground(Color.RED);
-		mStatusLabel.setText("Error:" + status);	
+		mStatusLabel.setText(status);	
 		}
+	}
+
+	public void colorReset() {
+		mFirstNameLabel.setForeground(Color.BLACK);
+		mLastNameLabel.setForeground(Color.BLACK);
+		mMiddleInitialLabel.setForeground(Color.BLACK);
+		mAddressLine1Label.setForeground(Color.BLACK);
+		mCityLabel.setForeground(Color.BLACK);
+		mStateLabel.setForeground(Color.BLACK);
+		mZipCodeLabel.setForeground(Color.BLACK);
+		mPhoneNumberLabel.setForeground(Color.BLACK);
+		mGenderLabel.setForeground(Color.BLACK);
+		mStatusLabel.setText(null);
+		showStatus("         Push or Pull Your Contacts!!", false);
+		mStatusLabel.setForeground(Color.magenta);
+		
 	}
 }
