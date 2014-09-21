@@ -1,22 +1,28 @@
+
 package com.contact.saver.ui.model;
 
-import java.util.Comparator;
 
-public final class Contact  {
+//Class Contact having ContactName, ContactAddress,PhoneNumber,IsMale as member variables
+public final class Contact  
+{
 	 public final ContactName mContactName;
 	 public final ContactAddress mContactAddress;
      public final String mPhoneNumber;
      public final Boolean mIsMale;
      
+     // The parameterized constructor gets the appropriate object, String and boolean values and assigns it to its member variables
      public Contact(ContactName contactName, ContactAddress contactAddress,
-    		 String phoneNumber, Boolean isMale) {
+    		 String phoneNumber, Boolean isMale) 
+     {
     	 mContactName = contactName;
     	 mContactAddress = contactAddress;
     	 mPhoneNumber = phoneNumber;
     	 mIsMale = isMale;
      }
      
-     public String getStringForFile() {
+     /** This method appends all the contact information of a person and returns it as a String for file storage  **/
+     public String getStringForFile() 
+     {
  		StringBuilder builder = new StringBuilder();
  		builder.append(mContactName.mFirstName.trim()).append("|");
  		builder.append(mContactName.mLastName.trim()).append("|");
