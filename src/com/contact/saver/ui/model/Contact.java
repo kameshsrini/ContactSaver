@@ -1,10 +1,8 @@
-
 package com.contact.saver.ui.model;
 
-
 //Class Contact having ContactName, ContactAddress,PhoneNumber,IsMale as member variables
-public final class Contact  
-{
+
+public final class Contact  {
 	 public final ContactName mContactName;
 	 public final ContactAddress mContactAddress;
      public final String mPhoneNumber;

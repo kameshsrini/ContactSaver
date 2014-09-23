@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -106,29 +109,29 @@ public final class ContactUserInterface
 	/** Initializing ADD, DELETE, MODIFY, FORMRESET buttons **/
 	private void initializeButtons() {
 		mAddButton = new JButton("ADD");
+		mAddButton.setBounds(255, 373, 89, 37);
 		mAddButton.setActionCommand(ContactController.ADD_COMMAND);
 		mAddButton.addActionListener(mContactController);
-		mAddButton.setBounds(255, 373, 89, 37);
 		mContactUserInterfaceFrame.getContentPane().add(mAddButton);
 
 		mDeleteButton = new JButton("DELETE");
+		mDeleteButton.setBounds(423, 373, 89, 37);
 		mDeleteButton.setForeground(Color.RED);
 		mDeleteButton.setActionCommand(ContactController.DELETE_COMMAND);
 		mDeleteButton.addActionListener(mContactController);
-		mDeleteButton.setBounds(423, 373, 89, 37);
 		mContactUserInterfaceFrame.getContentPane().add(mDeleteButton);
 
 		mFormResetButton = new JButton("FORM RESET");
+		mFormResetButton.setBounds(402, 223, 108, 37);
 		mFormResetButton.setForeground(Color.BLACK);
 		mFormResetButton.setActionCommand(ContactController.RESET_COMMAND);
 		mFormResetButton.addActionListener(mContactController);
-		mFormResetButton.setBounds(402, 211, 108, 37);
 		mContactUserInterfaceFrame.getContentPane().add(mFormResetButton);
 
 		mModifyButton = new JButton("MODIFY");
+		mModifyButton.setBounds(84, 373, 89, 37);
 		mModifyButton.setActionCommand(ContactController.MODIFY_COMMAND);
 		mModifyButton.addActionListener(mContactController);
-		mModifyButton.setBounds(84, 373, 89, 37);
 		mContactUserInterfaceFrame.getContentPane().add(mModifyButton);
 	}
 	
@@ -136,16 +139,14 @@ public final class ContactUserInterface
 	/** Initializing Radio buttons **/
 	private void initializeRadioButtons() {
 		mMaleRadioButton = new JRadioButton("M");
+		mMaleRadioButton.setBounds(202, 244, 39, 14);
 		mMaleRadioButton.setActionCommand(ContactController.SET_MALE_COMMAND);
-		mMaleRadioButton.setBounds(202, 232, 39, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mMaleRadioButton);
 
 		mFemaleRadioButton = new JRadioButton("F");
-		mFemaleRadioButton
-				.setActionCommand(ContactController.SET_FEMALE_COMMAND);
-		mFemaleRadioButton.setBounds(255, 232, 33, 14);
+		mFemaleRadioButton.setBounds(255, 244, 33, 14);
+		mFemaleRadioButton.setActionCommand(ContactController.SET_FEMALE_COMMAND);
 		mContactUserInterfaceFrame.getContentPane().add(mFemaleRadioButton);
-
 		mGenderButtonGroup = new ButtonGroup();
 		mGenderButtonGroup.add(mMaleRadioButton);
 		mGenderButtonGroup.add(mFemaleRadioButton);
@@ -162,15 +163,14 @@ public final class ContactUserInterface
 		mFirstNameTextField.setDocument(new UIServices(20));
 
 		mLastNameTextField = new JTextField();
-		mLastNameTextField.setBounds(202, 58, 153, 20);
+		mLastNameTextField.setBounds(202, 55, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameTextField);
 		mLastNameTextField.setColumns(10);
 		mLastNameTextField.setDocument(new UIServices(20));
 
 		mMiddleInitialTextField = new JTextField();
-		mMiddleInitialTextField.setBounds(482, 33, 28, 20);
-		mContactUserInterfaceFrame.getContentPane()
-				.add(mMiddleInitialTextField);
+		mMiddleInitialTextField.setBounds(484, 52, 28, 20);
+		mContactUserInterfaceFrame.getContentPane().add(mMiddleInitialTextField);
 		mMiddleInitialTextField.setColumns(10);
 		mMiddleInitialTextField.setDocument(new UIServices(1));
 
@@ -193,12 +193,13 @@ public final class ContactUserInterface
 		mCityTextField.setDocument(new UIServices(25));
 
 		mStateTextField = new JTextField();
-		mStateTextField.setBounds(202, 158, 39, 20);
+		mStateTextField.setBounds(202, 164, 39, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mStateTextField);
 		mStateTextField.setColumns(10);
 		mStateTextField.setDocument(new UIServices(2));
 
 		mZipCodeTextField = new JTextField();
+		mZipCodeTextField.setBounds(202, 189, 86, 20);
 		mZipCodeTextField.setDocument(new UIServices(9));
 		
 		// Key Adapter to consume only digits  in ZipCode 
@@ -212,11 +213,11 @@ public final class ContactUserInterface
 					e.consume();
 			}
 		});
-		mZipCodeTextField.setBounds(202, 183, 86, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mZipCodeTextField);
 		mZipCodeTextField.setColumns(10);
 
 		mPhoneNumberTextField = new JTextField();
+		mPhoneNumberTextField.setBounds(202, 220, 153, 20);
 		mPhoneNumberTextField.setDocument(new UIServices(10));
 		
 		// Key Adapter to consume only digits  in PhoneNumber
@@ -230,7 +231,6 @@ public final class ContactUserInterface
 					e.consume();
 			}
 		});
-		mPhoneNumberTextField.setBounds(202, 208, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberTextField);
 		mPhoneNumberTextField.setColumns(10);
 	}
@@ -239,6 +239,7 @@ public final class ContactUserInterface
 	/** Initializing Labels **/
 	                          
 	private void initializeLabels() {
+		mContactUserInterfaceFrame.getContentPane().setLayout(null);
 		mFirstNameLabel = new JLabel("FIRST NAME*");
 		mFirstNameLabel.setBounds(84, 36, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mFirstNameLabel);
@@ -248,7 +249,7 @@ public final class ContactUserInterface
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameLabel);
 
 		mMiddleInitialLabel = new JLabel("MIDDLE INITIAL");
-		mMiddleInitialLabel.setBounds(379, 36, 93, 14);
+		mMiddleInitialLabel.setBounds(381, 58, 93, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mMiddleInitialLabel);
 
 		mAddressLine1Label = new JLabel("ADDRESS LINE 1*");
@@ -256,8 +257,8 @@ public final class ContactUserInterface
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine1Label);
 
 		mAddressLine2Label = new JLabel("ADDRESS LINE 2");
-		mAddressLine2Label.setForeground(Color.BLACK);
 		mAddressLine2Label.setBounds(84, 111, 108, 14);
+		mAddressLine2Label.setForeground(Color.BLACK);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine2Label);
 
 		mCityLabel = new JLabel("CITY*");
@@ -265,39 +266,40 @@ public final class ContactUserInterface
 		mContactUserInterfaceFrame.getContentPane().add(mCityLabel);
 
 		mStateLabel = new JLabel("STATE*");
-		mStateLabel.setBounds(84, 161, 69, 14);
+		mStateLabel.setBounds(84, 167, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mStateLabel);
 
 		mZipCodeLabel = new JLabel("ZIP CODE*");
-		mZipCodeLabel.setBounds(84, 186, 69, 14);
+		mZipCodeLabel.setBounds(84, 192, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mZipCodeLabel);
 
 		mPhoneNumberLabel = new JLabel("CONTACT NUMBER*");
-		mPhoneNumberLabel.setBounds(84, 211, 118, 14);
+		mPhoneNumberLabel.setBounds(84, 223, 118, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberLabel);
 
 		mGenderLabel = new JLabel("GENDER*");
-		mGenderLabel.setBounds(84, 235, 69, 14);
+		mGenderLabel.setBounds(84, 248, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mGenderLabel);
 
 		mListViewFirstNameLabel = new JLabel("First Name");
-		mListViewFirstNameLabel.setForeground(Color.BLACK);
 		mListViewFirstNameLabel.setBounds(84, 286, 103, 14);
+		mListViewFirstNameLabel.setForeground(Color.BLACK);
 		mContactUserInterfaceFrame.getContentPane()
 				.add(mListViewFirstNameLabel);
 
 		mListViewLastNameLabel = new JLabel("Last Name");
-		mListViewLastNameLabel.setForeground(Color.BLACK);
 		mListViewLastNameLabel.setBounds(227, 286, 61, 14);
+		mListViewLastNameLabel.setForeground(Color.BLACK);
 		mContactUserInterfaceFrame.getContentPane().add(mListViewLastNameLabel);
 
 		mListViewPhoneNumberLabel = new JLabel("Contact Number");
+		mListViewPhoneNumberLabel.setBounds(363, 286, 103, 14);
 		mListViewPhoneNumberLabel.setForeground(Color.BLACK);
-		mListViewPhoneNumberLabel.setBounds(360, 286, 103, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mListViewPhoneNumberLabel);
 
-		mStatusLabel = new JLabel("");
+		mStatusLabel = new JLabel("        ADD, DELETE OR VIEW A CONTACT");
 		mStatusLabel.setBounds(156, 11, 354, 14);
+		mStatusLabel.setForeground(Color.MAGENTA);
 		mContactUserInterfaceFrame.getContentPane().add(mStatusLabel);
 	}
 	
@@ -312,7 +314,6 @@ public final class ContactUserInterface
 		mContactUserInterfaceFrame.setBounds(100, 100, 645, 453);
 		mContactUserInterfaceFrame
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mContactUserInterfaceFrame.getContentPane().setLayout(null);
 	}
 	
 	/** Method to reset the ContactForm and Label Colors **/
@@ -329,6 +330,7 @@ public final class ContactUserInterface
 		mPhoneNumberTextField.setText("");
 		mGenderButtonGroup.clearSelection();
 		mContactListView.clearSelection();
+		showStatus("        ADD, DELETE OR VIEW A CONTACT", false);
 		colorReset();
 	}
 	
@@ -357,19 +359,21 @@ public final class ContactUserInterface
 	}
 
 	
-	/** Method to show the Status Text Message **/
-	public void showStatus(String status, boolean error) {
-		if(error != true)
-		{
-		mStatusLabel.setForeground(Color.MAGENTA);
-		mStatusLabel.setText (status);
+	/** Method to show the Status Text Message  **/
+		public void showStatus(String status, boolean error) {
+			if(error != true)
+			{
+			mStatusLabel.setForeground(Color.MAGENTA);
+			mStatusLabel.setText (status);
+			playSound("b2.wav");
+			}
+			else
+			{
+			mStatusLabel.setForeground(Color.RED);
+			mStatusLabel.setText(status);
+			playSound("b1.wav");
+			}
 		}
-		else
-		{
-		mStatusLabel.setText(status);
-		mStatusLabel.setForeground(Color.RED);
-		}
-	}
 	
 	/** Method to reset Label Color **/
 	public void colorReset() {
@@ -381,10 +385,24 @@ public final class ContactUserInterface
 		mStateLabel.setForeground(Color.BLACK);
 		mZipCodeLabel.setForeground(Color.BLACK);
 		mPhoneNumberLabel.setForeground(Color.BLACK);
-		mGenderLabel.setForeground(Color.BLACK);
-		mStatusLabel.setText(null);
-		showStatus("            Add, Delete or Modify a contact!!", false);
-		mStatusLabel.setForeground(Color.magenta);
-		
+		mGenderLabel.setForeground(Color.BLACK);	
 	}
+	
+	public static synchronized void playSound(final String url) {
+		  new Thread(new Runnable() {
+		  // The wrapper thread is unnecessary, unless it blocks on the
+		  // Clip finishing; see comments.
+		    public void run() {
+		      try {
+		        Clip clip = AudioSystem.getClip();
+		        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+		        ContactUserInterface.class.getResourceAsStream(url));
+		        clip.open(inputStream);
+		        clip.start(); 
+		      } catch (Exception e) {
+		        System.err.println(e.getMessage());
+		      }
+		    }
+		  }).start();
+		}
 }
