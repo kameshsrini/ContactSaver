@@ -22,6 +22,7 @@ import com.contact.saver.ui.controller.ContactController;
 import com.contact.saver.ui.model.Contact;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public final class ContactUserInterface 
 {
@@ -38,9 +39,6 @@ public final class ContactUserInterface
 	public JLabel mZipCodeLabel;
 	public JLabel mPhoneNumberLabel;
 	public JLabel mGenderLabel;
-	public JLabel mListViewFirstNameLabel;
-	public JLabel mListViewLastNameLabel;
-	public JLabel mListViewPhoneNumberLabel;
 	public JLabel mStatusLabel;
 
 	/* Text Fields - User Text Input */
@@ -53,6 +51,11 @@ public final class ContactUserInterface
 	public JTextField mStateTextField;
 	public JTextField mZipCodeTextField;
 	public JTextField mPhoneNumberTextField;
+	public JTextField mNameHeading;
+	public JTextField mAddressHeading;
+	public JTextField mPhoneNumberHeading;
+	public JTextField mSexHeading;
+	public JTextField mContactListHeading;
 
 	/* Radio Buttons - User Select Input */
 	public JRadioButton mMaleRadioButton;
@@ -76,7 +79,6 @@ public final class ContactUserInterface
 	 *  Creating Object of ContactController class to use its member variables in other words to provide UserControl with the UserInterface 
 	 */
 	ContactController mContactController;
-	
 	
 	/**
 	 *  Parameterized Constructor with ContactController Class object parameter and Intializing various User Interface Elements
@@ -102,18 +104,19 @@ public final class ContactUserInterface
 	 */
 	private void initializeScrollList() {
 		mScrollPane = new JScrollPane();
-		mScrollPane.setBounds(5, 36, 368, 324);
+		mScrollPane.setBounds(5, 36, 362, 405);
 		mContactUserInterfaceFrame.getContentPane().add(mScrollPane);
 		
 		mContactListView = new JList<Contact>();
 		mScrollPane.setViewportView(mContactListView);
-		mListViewFirstNameLabel.setLabelFor(mContactListView);
 		
 		mContactListView.addListSelectionListener(mContactController);
 		mContactListView.setVisibleRowCount(10);
 		mContactListView.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mContactListView.setCellRenderer(new MultiCellRenderer());
 		mContactListView.setModel(mContactController.getAllContacts());
+		
+		
 
 	}
 
@@ -122,27 +125,32 @@ public final class ContactUserInterface
 	 */
 	private void initializeButtons() {
 		mAddButton = new JButton("ADD");
-		mAddButton.setBounds(545, 277, 89, 37);
+		mAddButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		mAddButton.setIcon(new ImageIcon(ContactUserInterface.class.getResource("add.png")));
+		mAddButton.setBounds(543, 379, 100, 37);
 		mAddButton.setActionCommand(ContactController.ADD_COMMAND);
 		mAddButton.addActionListener(mContactController);
 		mContactUserInterfaceFrame.getContentPane().add(mAddButton);
 
 		mDeleteButton = new JButton("DELETE");
-		mDeleteButton.setBounds(699, 277, 89, 37);
+		mDeleteButton.setIcon(new ImageIcon(ContactUserInterface.class.getResource("delete.png")));
+		mDeleteButton.setBounds(688, 379, 100, 37);
 		mDeleteButton.setForeground(Color.RED);
 		mDeleteButton.setActionCommand(ContactController.DELETE_COMMAND);
 		mDeleteButton.addActionListener(mContactController);
 		mContactUserInterfaceFrame.getContentPane().add(mDeleteButton);
 
-		mFormResetButton = new JButton("FORM RESET");
-		mFormResetButton.setBounds(687, 208, 108, 37);
+		mFormResetButton = new JButton("RESET");
+		mFormResetButton.setIcon(new ImageIcon(ContactUserInterface.class.getResource("refresh.png")));
+		mFormResetButton.setBounds(688, 331, 100, 37);
 		mFormResetButton.setForeground(Color.BLACK);
 		mFormResetButton.setActionCommand(ContactController.RESET_COMMAND);
 		mFormResetButton.addActionListener(mContactController);
 		mContactUserInterfaceFrame.getContentPane().add(mFormResetButton);
 
 		mModifyButton = new JButton("MODIFY");
-		mModifyButton.setBounds(383, 277, 89, 37);
+		mModifyButton.setIcon(new ImageIcon(ContactUserInterface.class.getResource("modify.png")));
+		mModifyButton.setBounds(391, 380, 100, 37);
 		mModifyButton.setActionCommand(ContactController.MODIFY_COMMAND);
 		mModifyButton.addActionListener(mContactController);
 		mContactUserInterfaceFrame.getContentPane().add(mModifyButton);
@@ -154,12 +162,12 @@ public final class ContactUserInterface
 	 */
 	private void initializeRadioButtons() {
 		mMaleRadioButton = new JRadioButton("M");
-		mMaleRadioButton.setBounds(501, 230, 39, 14);
+		mMaleRadioButton.setBounds(501, 330, 39, 14);
 		mMaleRadioButton.setActionCommand(ContactController.SET_MALE_COMMAND);
 		mContactUserInterfaceFrame.getContentPane().add(mMaleRadioButton);
 
 		mFemaleRadioButton = new JRadioButton("F");
-		mFemaleRadioButton.setBounds(554, 230, 33, 14);
+		mFemaleRadioButton.setBounds(558, 330, 39, 14);
 		mFemaleRadioButton.setActionCommand(ContactController.SET_FEMALE_COMMAND);
 		mContactUserInterfaceFrame.getContentPane().add(mFemaleRadioButton);
 		mGenderButtonGroup = new ButtonGroup();
@@ -174,49 +182,49 @@ public final class ContactUserInterface
 	private void initializeTextFields() {
 
 		mFirstNameTextField = new JTextField();
-		mFirstNameTextField.setBounds(501, 33, 153, 20);
+		mFirstNameTextField.setBounds(502, 39, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mFirstNameTextField);
 		mFirstNameTextField.setColumns(10);
 		mFirstNameTextField.setDocument(new UIServices(20));
 
 		mLastNameTextField = new JTextField();
-		mLastNameTextField.setBounds(501, 58, 153, 20);
+		mLastNameTextField.setBounds(502, 60, 153, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameTextField);
 		mLastNameTextField.setColumns(10);
 		mLastNameTextField.setDocument(new UIServices(20));
 
 		mMiddleInitialTextField = new JTextField();
-		mMiddleInitialTextField.setBounds(760, 58, 28, 20);
+		mMiddleInitialTextField.setBounds(747, 60, 28, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mMiddleInitialTextField);
 		mMiddleInitialTextField.setColumns(10);
 		mMiddleInitialTextField.setDocument(new UIServices(1));
 
 		mAddressLine1TextField = new JTextField();
-		mAddressLine1TextField.setBounds(501, 83, 289, 20);
+		mAddressLine1TextField.setBounds(499, 118, 289, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine1TextField);
 		mAddressLine1TextField.setColumns(10);
 		mAddressLine1TextField.setDocument(new UIServices(35));
 
 		mAddressLine2TextField = new JTextField();
-		mAddressLine2TextField.setBounds(501, 108, 289, 20);
+		mAddressLine2TextField.setBounds(499, 143, 289, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine2TextField);
 		mAddressLine2TextField.setColumns(10);
 		mAddressLine2TextField.setDocument(new UIServices(35));
 
 		mCityTextField = new JTextField();
-		mCityTextField.setBounds(501, 130, 86, 20);
+		mCityTextField.setBounds(499, 168, 86, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mCityTextField);
 		mCityTextField.setColumns(10);
 		mCityTextField.setDocument(new UIServices(25));
 
 		mStateTextField = new JTextField();
-		mStateTextField.setBounds(501, 155, 39, 20);
+		mStateTextField.setBounds(501, 193, 39, 20);
 		mContactUserInterfaceFrame.getContentPane().add(mStateTextField);
 		mStateTextField.setColumns(10);
 		mStateTextField.setDocument(new UIServices(2));
 
 		mZipCodeTextField = new JTextField();
-		mZipCodeTextField.setBounds(501, 180, 86, 20);
+		mZipCodeTextField.setBounds(501, 218, 86, 20);
 		mZipCodeTextField.setDocument(new UIServices(9));
 		
 		/* Key Adapter to consume only digits  in ZipCode */ 
@@ -234,7 +242,7 @@ public final class ContactUserInterface
 		mZipCodeTextField.setColumns(10);
 
 		mPhoneNumberTextField = new JTextField();
-		mPhoneNumberTextField.setBounds(501, 205, 153, 20);
+		mPhoneNumberTextField.setBounds(502, 273, 153, 20);
 		mPhoneNumberTextField.setDocument(new UIServices(10));
 		
 		/* Key Adapter to consume only digits  in PhoneNumber */
@@ -250,8 +258,58 @@ public final class ContactUserInterface
 		});
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberTextField);
 		mPhoneNumberTextField.setColumns(10);
+		
+		mNameHeading = new JTextField();
+		mNameHeading.setEnabled(false);
+		mNameHeading.setForeground(new Color(0, 0, 0));
+		mNameHeading.setText("NAME");
+		mNameHeading.setToolTipText("");
+		mNameHeading.setBounds(377, 21, 418, 14);
+		mNameHeading.setEditable(false);
+		mNameHeading.setBackground(new Color(245, 245, 220));
+		mNameHeading.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		mContactUserInterfaceFrame.getContentPane().add(mNameHeading);
+		mNameHeading.setColumns(10);
+		
+		mAddressHeading = new JTextField();
+		mAddressHeading.setEnabled(false);
+		mAddressHeading.setBounds(377, 99, 418, 14);
+		mAddressHeading.setText("ADDRESS");
+		mAddressHeading.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		mAddressHeading.setEditable(false);
+		mAddressHeading.setColumns(10);
+		mAddressHeading.setBackground(new Color(245, 245, 220));
+		mContactUserInterfaceFrame.getContentPane().add(mAddressHeading);
+		
+		mPhoneNumberHeading = new JTextField();
+		mPhoneNumberHeading.setEnabled(false);
+		mPhoneNumberHeading.setBounds(377, 251, 418, 14);
+		mPhoneNumberHeading.setText("PHONE NUMBER");
+		mPhoneNumberHeading.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		mPhoneNumberHeading.setEditable(false);
+		mPhoneNumberHeading.setColumns(10);
+		mPhoneNumberHeading.setBackground(new Color(245, 245, 220));
+		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberHeading);
+		
+		mSexHeading = new JTextField();
+		mSexHeading.setEnabled(false);
+		mSexHeading.setBounds(376, 309, 419, 14);
+		mSexHeading.setText("SEX");
+		mSexHeading.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+		mSexHeading.setEditable(false);
+		mSexHeading.setColumns(10);
+		mSexHeading.setBackground(new Color(245, 245, 220));
+		mContactUserInterfaceFrame.getContentPane().add(mSexHeading);
+		
+		mContactListHeading = new JTextField();
+		mContactListHeading.setBounds(5, 20, 362, 14);
+		mContactListHeading.setText("FIRST NAME                  LAST NAME                  CONTACT NUMBER");
+		mContactListHeading.setFont(new Font("Tahoma", Font.BOLD, 11));
+		mContactListHeading.setEditable(false);
+		mContactListHeading.setColumns(10);
+		mContactListHeading.setBackground(new Color(245, 245, 220));
+		mContactUserInterfaceFrame.getContentPane().add(mContactListHeading);
 	}
-	
 	
 	/**
 	 *  Initializing Labels 
@@ -260,64 +318,48 @@ public final class ContactUserInterface
 	private void initializeLabels() {
 		mContactUserInterfaceFrame.getContentPane().setLayout(null);
 		mFirstNameLabel = new JLabel("FIRST NAME*");
-		mFirstNameLabel.setBounds(383, 36, 108, 14);
+		mFirstNameLabel.setBounds(384, 42, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mFirstNameLabel);
 
 		mLastNameLabel = new JLabel("LAST NAME*");
-		mLastNameLabel.setBounds(383, 61, 108, 14);
+		mLastNameLabel.setBounds(384, 63, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mLastNameLabel);
 
 		mMiddleInitialLabel = new JLabel("MIDDLE INITIAL");
-		mMiddleInitialLabel.setBounds(668, 61, 93, 14);
+		mMiddleInitialLabel.setBounds(659, 63, 93, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mMiddleInitialLabel);
 
 		mAddressLine1Label = new JLabel("ADDRESS LINE 1*");
-		mAddressLine1Label.setBounds(383, 86, 108, 14);
+		mAddressLine1Label.setBounds(383, 121, 108, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine1Label);
 
 		mAddressLine2Label = new JLabel("ADDRESS LINE 2");
-		mAddressLine2Label.setBounds(383, 111, 108, 14);
+		mAddressLine2Label.setBounds(383, 146, 108, 14);
 		mAddressLine2Label.setForeground(Color.BLACK);
 		mContactUserInterfaceFrame.getContentPane().add(mAddressLine2Label);
 
 		mCityLabel = new JLabel("CITY*");
-		mCityLabel.setBounds(383, 133, 46, 14);
+		mCityLabel.setBounds(383, 171, 46, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mCityLabel);
 
 		mStateLabel = new JLabel("STATE*");
-		mStateLabel.setBounds(383, 158, 69, 14);
+		mStateLabel.setBounds(383, 196, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mStateLabel);
 
 		mZipCodeLabel = new JLabel("ZIP CODE*");
-		mZipCodeLabel.setBounds(383, 183, 69, 14);
+		mZipCodeLabel.setBounds(383, 221, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mZipCodeLabel);
 
 		mPhoneNumberLabel = new JLabel("CONTACT NUMBER*");
-		mPhoneNumberLabel.setBounds(383, 208, 118, 14);
+		mPhoneNumberLabel.setBounds(384, 276, 118, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mPhoneNumberLabel);
 
 		mGenderLabel = new JLabel("GENDER*");
-		mGenderLabel.setBounds(383, 230, 69, 14);
+		mGenderLabel.setBounds(384, 330, 69, 14);
 		mContactUserInterfaceFrame.getContentPane().add(mGenderLabel);
 
-		mListViewFirstNameLabel = new JLabel("First Name");
-		mListViewFirstNameLabel.setBounds(5, 22, 103, 14);
-		mListViewFirstNameLabel.setForeground(Color.BLACK);
-		mContactUserInterfaceFrame.getContentPane()
-				.add(mListViewFirstNameLabel);
-
-		mListViewLastNameLabel = new JLabel("Last Name");
-		mListViewLastNameLabel.setBounds(128, 22, 61, 14);
-		mListViewLastNameLabel.setForeground(Color.BLACK);
-		mContactUserInterfaceFrame.getContentPane().add(mListViewLastNameLabel);
-
-		mListViewPhoneNumberLabel = new JLabel("Contact Number");
-		mListViewPhoneNumberLabel.setBounds(248, 22, 103, 14);
-		mListViewPhoneNumberLabel.setForeground(Color.BLACK);
-		mContactUserInterfaceFrame.getContentPane().add(mListViewPhoneNumberLabel);
-
 		mStatusLabel = new JLabel("        ADD, DELETE OR VIEW A CONTACT");
-		mStatusLabel.setBounds(383, 346, 405, 14);
+		mStatusLabel.setBounds(383, 427, 405, 14);
 		mStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mStatusLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		mStatusLabel.setForeground(Color.MAGENTA);
@@ -333,8 +375,8 @@ public final class ContactUserInterface
 		mContactUserInterfaceFrame.setResizable(false);
 		mContactUserInterfaceFrame.setTitle("ContactSaver");
 		mContactUserInterfaceFrame.getContentPane().setBackground(
-				Color.LIGHT_GRAY);
-		mContactUserInterfaceFrame.setBounds(100, 100, 811, 408);
+				Color.WHITE);
+		mContactUserInterfaceFrame.setBounds(100, 100, 811, 483);
 		mContactUserInterfaceFrame
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
