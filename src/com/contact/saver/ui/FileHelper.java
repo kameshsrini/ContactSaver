@@ -22,6 +22,11 @@ public class FileHelper {
 	File mFile;
 	File mTempfile;
 
+	/**
+	 * Constructor FileHelper to Check and Create files
+	 * Files - Contacts.txt , myTempFile.txt
+	 */
+	
 	public FileHelper() {
 		try {
 			/* Check and create a file. */
@@ -76,7 +81,10 @@ public class FileHelper {
 		return contacts;
 	}
 
-	// ADD A CONTACT
+	/**
+	 *  METHOD TO ADD A CONTACT INTO THE FILE
+	 * @param contact
+	 */
 	public void addContact(Contact contact) {
 		String summary = contact.getStringForFile();
 		System.out.println(summary);
@@ -91,7 +99,10 @@ public class FileHelper {
 		}
 	}
 
-	// TO DELETE A CONTACT
+	/**
+	 * METHOD TO  TO DELETE A CONTACT FROM THE FILE
+	 * @param contact
+	 */
 	public void deleteContact(Contact contact) {
 		try {
 			BufferedReader sr = new BufferedReader(new FileReader(mFile));
@@ -116,7 +127,12 @@ public class FileHelper {
 		}
 	}
 
-	// FUNCTION TO COPY TEMPFILE INTO CONTACTS FILE
+	/**
+	 *  FUNCTION TO COPY TEMPFILE INTO CONTACTS FILE
+	 * @param sourceFile
+	 * @param destFile
+	 * @throws IOException
+	 */
 	public static void CopyFile(File sourceFile, File destFile)
 			throws IOException {
 		if (!destFile.exists())

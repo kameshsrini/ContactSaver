@@ -19,16 +19,19 @@ import javax.swing.event.ListSelectionListener;
 
 
 
+
 import com.contact.saver.ui.FileHelper;
 import com.contact.saver.ui.model.Contact;
 import com.contact.saver.ui.model.ContactAddress;
 import com.contact.saver.ui.model.ContactName;
 import com.contact.saver.ui.view.ContactUserInterface;
 
-/* Constructor implements JButtons and JRadiobutton ActionListener and JList ListSelectionListener */  
+/**
+ *  Constructor implements JButtons and JRadiobutton ActionListener and JList ListSelectionListener 
+ */  
 public final class ContactController implements ActionListener,
 		ListSelectionListener {
-	/* Setting COMMAND value to each action */ 
+	/*Setting COMMAND value to each action */ 
 	public static final String ADD_COMMAND = "add";
 	public static final String DELETE_COMMAND = "delete";
 	public static final String RESET_COMMAND = "reset";
@@ -39,7 +42,9 @@ public final class ContactController implements ActionListener,
 	FileHelper mFileHelper = new FileHelper();
 	DefaultListModel<Contact> mContactList = new DefaultListModel<Contact>();
 	
-	/* Object of ContactUserInterface Class */ 
+	/**
+	 *  Object of ContactUserInterface Class 
+	 */ 
 	ContactUserInterface mUI;
 
 	public void setContactUserInterface(
@@ -47,7 +52,9 @@ public final class ContactController implements ActionListener,
 		mUI = contactUserInterface;
 	}
 
-	/** Override Method to check the ActionListener Command Value and to perform appropriate function **/ 
+	/** 
+	 * Override Method to check the ActionListener Command Value and to perform appropriate function 
+	 */ 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String command = event.getActionCommand();
@@ -59,23 +66,27 @@ public final class ContactController implements ActionListener,
 			if (validateInputFields() && !isContactAlreadyThere()) {
 				// check if the FN, LN, MIDDLE is already there.
 				performAdd();
+				ContactUserInterface.playSound("b2.wav");
 			}
 		}
 		/* Checks command value for "delete" */ 
 		else if (DELETE_COMMAND.equals(command)) {
 			performDelete();
+			ContactUserInterface.playSound("b2.wav");
 			mUI.formReset();
 		}
 		/* Checks command value for "reset" */ 
 		else if (RESET_COMMAND.equals(command)) {
 			mUI.formReset();
-			mUI.mStatusLabel.setForeground(Color.MAGENTA);
+			ContactUserInterface.playSound("b2.wav");
+			//mUI.mStatusLabel.setForeground(Color.MAGENTA);
 		}
 		/* Checks command value for "modify" */ 
 		else if (MODIFY_COMMAND.equals(command)) {
 			if (validateInputFields()) {
 				performDelete();
 				performAdd();
+				ContactUserInterface.playSound("b2.wav");
 			}
 		}
 	}
@@ -83,7 +94,9 @@ public final class ContactController implements ActionListener,
 	
 
 	
-	/** Method to ValidateInputFields to check whether the required TextFields are entered if not to throw a Status  message **/
+	/** 
+	 * Method to ValidateInputFields to check whether the required TextFields are entered if not to throw a Status  message 
+	 */
 	private boolean validateInputFields() {
 		boolean validation = true;
 		String firstNameText = mUI.mFirstNameTextField.getText().trim();
@@ -142,7 +155,10 @@ public final class ContactController implements ActionListener,
 		}
 		return validation;
 	}
-
+	
+	/** 
+	 * Method to check whether the Contact Person Exist or not
+	 */
 	private boolean isContactAlreadyThere() {
 		String middleInitialText = mUI.mMiddleInitialTextField.getText();
 		Character middleInitial = '\u0000';
@@ -167,14 +183,15 @@ public final class ContactController implements ActionListener,
 		}
 		return false;
 	}
+	
+	/** 
+	 * Method to perform delete of a contact 
+	 */
 
 	private void performDelete() {
 		Contact contact = mUI.mContactListView.getSelectedValue();
 		if (contact == null)
 		{
-			System.out.println("here");
-			mUI.showStatus("              SELECT A CONTACT TO DELETE", true);
-			//mUI.mStatusLabel.setForeground(Color.magenta);
 			return;
 		}
 		/* remove person from the ContactList */
@@ -182,7 +199,10 @@ public final class ContactController implements ActionListener,
 		/* remove person from the file */
 		mFileHelper.deleteContact(contact);
 	}
-
+	
+	/** 
+	 * Method to Add a contact 
+	 */
 	private void performAdd() 
 	{
 		String middleInitialText = mUI.mMiddleInitialTextField.getText();
@@ -230,18 +250,26 @@ public final class ContactController implements ActionListener,
 		
 	}
 
-	/** Override Method to get ListSelectionEvent and to perform appropriate function **/ 
+	/** 
+	 * Override Method to get ListSelectionEvent and to perform appropriate function 
+	 */ 
 	@Override
 	public void valueChanged(ListSelectionEvent e) 
-	{
-		System.out.println("valueChanged");
+	{	System.out.println("sound");
+		mUI.mModifyButton.setEnabled(true);
+		mUI.mDeleteButton.setEnabled(true);
+		mUI.mAddButton.setEnabled(false);
+		mUI.colorReset();
+		mUI.showStatus("       MODIFY OR DELETE THE CONTACT", false);
 		Contact contact = mUI.mContactListView.getSelectedValue();
 		if (contact != null) 
 		mUI.showContact(contact);
 	}
 
 	
-	/** Method to show Contacts In JList **/
+	/**
+	 *  Method to show Contacts In JList 
+	 */
 	public ListModel<Contact> getAllContacts() 
 	{
 		/* Maintains a List getting contents from the File */
@@ -260,7 +288,9 @@ public final class ContactController implements ActionListener,
 		
 	
 	
-	/** Method to Sort the JList content based on FirstName if not then LastName if not then MiddleInitial **/
+	/** 
+	 * Method to Sort the JList content based on FirstName if not then LastName if not then MiddleInitial 
+	 */
   
    void sort() 
    {
@@ -275,10 +305,14 @@ public final class ContactController implements ActionListener,
 				return o1.compareTo(o2);
 			}
 	   });
-	   /** After Sorting Clears the List **/
+	   /** 
+	    * After Sorting Clears the List 
+	    */
 	   mContactList.clear();
 	   
-	   /** Adds Sorted List Content Into the JList **/
+	   /**
+	    *  Adds Sorted List Content Into the JList   
+	    */
 	   mContactList.clear();
 		for (Contact contact : contacts) {
 			mContactList.addElement(contact);

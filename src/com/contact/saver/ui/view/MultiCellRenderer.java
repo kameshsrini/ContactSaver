@@ -10,10 +10,17 @@ import javax.swing.ListCellRenderer;
 
 import com.contact.saver.ui.model.Contact;
 
+/**
+ * Class MultiCellRenderer to split the Jpanel into three column
+ */
 final class MultiCellRenderer extends JPanel implements
 		ListCellRenderer<Contact> {
+	/*The columns are FrstName , LastName and PhoneNumber */
 	JLabel mFirstName, mLastName, mPhoneNumber;
 
+	/**Constructor to add elements in to the multicolumn List
+	 * 
+	 */
 	MultiCellRenderer() {
 		setLayout(new GridLayout(1, 3));
 		mFirstName = new JLabel();
@@ -26,7 +33,10 @@ final class MultiCellRenderer extends JPanel implements
 		add(mLastName);
 		add(mPhoneNumber);
 	}
-
+	
+	/**
+	 * Override method to set and align the content of the list
+	 */
 	@Override
 	public Component getListCellRendererComponent(
 			JList<? extends Contact> list, Contact contact, int index,

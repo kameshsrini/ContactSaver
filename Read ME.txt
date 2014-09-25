@@ -1,0 +1,20 @@
+change the path to \ContactManager\src
+
+Compile the following packages
+1) controller
+2 )model
+3 )view
+
+The cmd instructions for the above is as follows
+javac com\contact\saver\ui\controller\*.java
+javac com\contact\saver\ui\model\*.java
+javac com\contact\saver\ui\view\*.java
+
+
+Now, compile the folder carrying the main java file
+
+javac com\contact\saver\ui\*.java
+
+Now, Run the main java file
+
+java com.contact.saver.ui.ContactSaverMain
