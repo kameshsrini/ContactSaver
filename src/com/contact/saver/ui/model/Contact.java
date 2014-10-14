@@ -6,16 +6,18 @@ public final class Contact  {
 	 public final ContactName mContactName;
 	 public final ContactAddress mContactAddress;
      public final String mPhoneNumber;
+     public final String mEmailAddress;
      public final Boolean mIsMale;
      
      // The parameterized constructor gets the appropriate object, String and boolean values and assigns it to its member variables
      public Contact(ContactName contactName, ContactAddress contactAddress,
-    		 String phoneNumber, Boolean isMale) 
+    		 String phoneNumber, String emailAddress, Boolean isMale) 
      {
     	 mContactName = contactName;
     	 mContactAddress = contactAddress;
     	 mPhoneNumber = phoneNumber;
-    	 mIsMale = isMale;
+    	 mEmailAddress= emailAddress;
+    	 mIsMale = isMale; 
      }
      
      /** This method appends all the contact information of a person and returns it as a String for file storage  **/
@@ -31,8 +33,10 @@ public final class Contact  {
  		builder.append(mContactAddress.mCity.trim()).append("|");
  		builder.append(mContactAddress.mState.trim()).append("|");
  		builder.append(mContactAddress.mZipCode).append("|");
+ 		builder.append(mContactAddress.mCountry.trim()).append("|");
  		
  		builder.append(mPhoneNumber.trim()).append("|");
+ 		builder.append(mEmailAddress.trim()).append("|");
  		builder.append(mIsMale);
 		return builder.toString();
 	}

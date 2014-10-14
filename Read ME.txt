@@ -1,3 +1,5 @@
+
+
 change the path to \ContactManager\src
 
 Compile the following packages
@@ -18,3 +20,17 @@ javac com\contact\saver\ui\*.java
 Now, Run the main java file
 
 java com.contact.saver.ui.ContactSaverMain
+
+
+New things added in this Iteration:
+
+Sound Interface which can be turned on and off.
+Two extra text entry Country and Email. 
+Jframe resize to widow screen.
+Jframe fits according to window resize.
+Timed display of status to notify contact saved, moified and deleted.
+Progress bar to indicate user the percentage of form completion.
+Overall UI modification (grouping of textfields, work with color, sounds,etc.)
+
+
+Hope you Like it!!

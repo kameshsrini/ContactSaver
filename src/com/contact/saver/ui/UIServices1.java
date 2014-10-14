@@ -2,16 +2,16 @@ package com.contact.saver.ui;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-
 /**
- * UIservices Class to limit the characters that can be entered in to the TextFields
+ * UIservices Class to limit the characters that can be entered in to the EmailAddress without Uppercasing the content
  * @author kameshsrini
  *
  */
-public class UIServices extends PlainDocument
-{	private int limit;
-		
-	public UIServices (int limitation)
+public class UIServices1 extends PlainDocument
+{
+	private int limit;
+	
+	public UIServices1 (int limitation) 
 	{
 		this.limit = limitation;
 	}
@@ -23,10 +23,9 @@ public class UIServices extends PlainDocument
 
 		else if((getLength() + str.length()) <= limit)
 		{
-			str = str.toUpperCase();
 			super.insertString(offset, str, set);				
 		}
 	}
 	
-}
 
+}

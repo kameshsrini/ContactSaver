@@ -12,8 +12,10 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 
 
 
@@ -38,7 +40,8 @@ public final class ContactController implements ActionListener,
 	public static final String MODIFY_COMMAND = "modify";
 	public static final String SET_MALE_COMMAND = "male";
 	public static final String SET_FEMALE_COMMAND = "female";
-
+	
+	Timer timer;
 	FileHelper mFileHelper = new FileHelper();
 	DefaultListModel<Contact> mContactList = new DefaultListModel<Contact>();
 	
@@ -49,7 +52,7 @@ public final class ContactController implements ActionListener,
 
 	public void setContactUserInterface(
 			ContactUserInterface contactUserInterface) {
-		mUI = contactUserInterface;
+		    mUI = contactUserInterface;
 	}
 
 	/** 
@@ -63,15 +66,25 @@ public final class ContactController implements ActionListener,
 		/* Checks command value for "add" */
 		if (ADD_COMMAND.equals(command)) {
 			/* check if Valid InputFields and Present and FirstName, LastName and MiddleName of a person doesn't exist to perform add */
-			if (validateInputFields() && !isContactAlreadyThere()) {
+			if (validateInputFields() && !isContactAlreadyThere() && mUI.mode==1) 
+			{
 				// check if the FN, LN, MIDDLE is already there.
-				performAdd();
+			    performAdd();
+			    timedDisplay("Contact Has Been Added!", new Color(7,48,3));
 				ContactUserInterface.playSound("b2.wav");
-			}
+				}
+				else if (mUI.mode==0 && validateInputFields() && !isModifyContactAlreadyThere())
+				{
+					performDelete();
+					performAdd();
+					timedDisplay("Contact Has Been Modified", new Color(7,48,3));
+					ContactUserInterface.playSound("b2.wav");
+				}
 		}
 		/* Checks command value for "delete" */ 
 		else if (DELETE_COMMAND.equals(command)) {
 			performDelete();
+			timedDisplay("Contact Has Been Deleted!",Color.red);
 			ContactUserInterface.playSound("b2.wav");
 			mUI.formReset();
 		}
@@ -79,16 +92,27 @@ public final class ContactController implements ActionListener,
 		else if (RESET_COMMAND.equals(command)) {
 			mUI.formReset();
 			ContactUserInterface.playSound("b2.wav");
-			//mUI.mStatusLabel.setForeground(Color.MAGENTA);
 		}
-		/* Checks command value for "modify" */ 
-		else if (MODIFY_COMMAND.equals(command)) {
-			if (validateInputFields()) {
-				performDelete();
-				performAdd();
-				ContactUserInterface.playSound("b2.wav");
-			}
-		}
+		
+	}
+	/** 
+	 * Timed Status Display
+	 * @param display
+	 * @param color
+	 */
+	public void timedDisplay(String display, Color color)
+	{
+		ActionListener actionListener = new ActionListener() {
+	        public void actionPerformed(ActionEvent actionEvent) {
+	        	mUI.mStatusDisplayLabel.setVisible(false);
+	        	timer.stop();
+	        }
+	    };
+	    mUI.mStatusDisplayLabel.setText(display);
+	    mUI.mStatusDisplayLabel.setVisible(true);
+		mUI.mStatusDisplayLabel.setForeground(color);
+	    timer = new Timer(2000, actionListener);
+	    timer.start();
 	}
 
 	
@@ -97,60 +121,107 @@ public final class ContactController implements ActionListener,
 	/** 
 	 * Method to ValidateInputFields to check whether the required TextFields are entered if not to throw a Status  message 
 	 */
-	private boolean validateInputFields() {
+	public boolean validateInputFields() {
 		boolean validation = true;
+		int x=90;
 		String firstNameText = mUI.mFirstNameTextField.getText().trim();
 		if (firstNameText.length() < 1 || firstNameText.contains("|")) {
-			
+			 ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mFirstNameLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		String lastNameText = mUI.mLastNameTextField.getText().trim();
 		if (lastNameText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mLastNameLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		String addressLine1Text = mUI.mAddressLine1TextField.getText().trim();
 		if (addressLine1Text.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mAddressLine1Label.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		String cityText = mUI.mCityTextField.getText().trim();
 		if (cityText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mCityLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		String stateText = mUI.mStateTextField.getText().trim();
 		if (stateText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mStateLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		String zipCodeText = mUI.mZipCodeTextField.getText().trim();
 		if (zipCodeText.length() < 1 || firstNameText.contains("|")) {
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
+			 ContactUserInterface.playSound("b1.wav");
 			 mUI.mZipCodeLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
+		
+		String countryText = mUI.mCountryTextField.getText().trim();
+		if (countryText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
+			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
+			 mUI.mCountryLabel.setForeground(Color.red);
+			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
+		}
+		
 		String phonenumberText = mUI.mPhoneNumberTextField.getText().trim();
 		if (phonenumberText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mPhoneNumberLabel.setForeground(Color.red);
 			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
+		}
+		
+		String emailAddressText = mUI.mEmailAddressTextField.getText().trim();
+		if (emailAddressText.length() < 1 || firstNameText.contains("|")) {
+			ContactUserInterface.playSound("b1.wav");
+			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
+			 mUI.mEmailAddressLabel.setForeground(Color.red);
+			validation = false;
+			x=x-10;
+			mUI.mProgressBar.setValue(x);
 		}
 		try
 		{
 		if (!mUI.mGenderButtonGroup.getSelection().isEnabled()) {
+			ContactUserInterface.playSound("b1.wav");
+
 			 mUI.showStatus("      Invalid input! Enter fields marked red", true);
 			 mUI.mGenderLabel.setForeground(Color.red);
-			validation = false;}
+			validation = false;
+			}
 		} 
+		
 		catch(NullPointerException e)
 		{
+			ContactUserInterface.playSound("b1.wav");
 			mUI.mGenderLabel.setForeground(Color.red);
 		}
 		return validation;
@@ -184,6 +255,58 @@ public final class ContactController implements ActionListener,
 		return false;
 	}
 	
+	
+	private int ModifyContactNameIndex(Contact contact1) {
+		String middleInitialText = mUI.mMiddleInitialTextField.getText();
+		Character middleInitial = '\u0000';
+		if (middleInitialText.length() > 0) {
+			middleInitial = middleInitialText.charAt(0);
+		}
+		 
+		ContactName contactName = new ContactName(
+			contact1.mContactName.mFirstName,
+				contact1.mContactName.mLastName, contact1.mContactName.mMiddleInitial);
+		
+
+		for (int i = 0; i < mContactList.getSize(); i++) 
+		{
+			Contact contact = mContactList.get(i);
+			if (contact.mContactName.toString().equals(contactName.toString())) 
+			{
+				/* should not add this contact */
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private boolean isModifyContactAlreadyThere() {
+		String middleInitialText = mUI.mMiddleInitialTextField.getText();
+		Character middleInitial = '\u0000';
+		if (middleInitialText.length() > 0) {
+			middleInitial = middleInitialText.charAt(0);
+		}
+
+		ContactName contactName = new ContactName(
+				mUI.mFirstNameTextField.getText(),
+				mUI.mLastNameTextField.getText(), middleInitial);
+		
+		int x = ModifyContactNameIndex(mUI.mContactListView.getSelectedValue());
+		for (int i = 0; i < mContactList.getSize(); i++) 
+		{
+			if (i!=x)
+			{
+			Contact contact = mContactList.get(i);
+			if (contact.mContactName.toString().equals(contactName.toString())) 
+			{
+				/* should not add this contact */
+				mUI.showStatus( "This person already exist! Modify instead of adding", true);
+				return true;
+			}
+			}
+		}
+		return false;
+	}
 	/** 
 	 * Method to perform delete of a contact 
 	 */
@@ -223,9 +346,12 @@ public final class ContactController implements ActionListener,
 				mUI.mAddressLine1TextField.getText(),
 				mUI.mAddressLine2TextField.getText(),
 				mUI.mCityTextField.getText(), mUI.mStateTextField.getText(),
-				zipcode);
+				zipcode,mUI.mCountryTextField.getText() );
 		/* Get the phoneNumber from the TextField */
 		String phoneNumber = mUI.mPhoneNumberTextField.getText();
+		
+		/* Get the emailAddres from the TextField */
+		String emailAddress = mUI.mEmailAddressTextField.getText();
 		
 		/* Get the Gender from the RadioButton selected */
 		Boolean isMale = false;
@@ -236,7 +362,7 @@ public final class ContactController implements ActionListener,
 		}
 		
 		/* Creates and Contact Class object and class the constructor with required parameters being passed */ 
-		Contact contact = new Contact(contactName, contactAddress, phoneNumber,isMale);
+		Contact contact = new Contact(contactName, contactAddress, phoneNumber,emailAddress, isMale);
 		/* Adds the Contact to the JList */
 		mContactList.addElement(contact);
 		/** Call for sort **/
@@ -255,11 +381,10 @@ public final class ContactController implements ActionListener,
 	 */ 
 	@Override
 	public void valueChanged(ListSelectionEvent e) 
-	{	System.out.println("sound");
-		mUI.mModifyButton.setEnabled(true);
+	{	mUI.mode=0;
 		mUI.mDeleteButton.setEnabled(true);
-		mUI.mAddButton.setEnabled(false);
 		mUI.colorReset();
+		progressbarStatus();
 		mUI.showStatus("       MODIFY OR DELETE THE CONTACT", false);
 		Contact contact = mUI.mContactListView.getSelectedValue();
 		if (contact != null) 
@@ -317,6 +442,82 @@ public final class ContactController implements ActionListener,
 		for (Contact contact : contacts) {
 			mContactList.addElement(contact);
 		}
+	}
+   
+   /**
+    * Progress Bar Indicator
+    * @return
+    */
+   public boolean progressbarStatus() {
+		boolean validation = true;
+		int x=0;
+		String firstNameText = mUI.mFirstNameTextField.getText().trim();
+		if (firstNameText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		String lastNameText = mUI.mLastNameTextField.getText().trim();
+		if (lastNameText.length() > 0) {
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		String addressLine1Text = mUI.mAddressLine1TextField.getText().trim();
+		if (addressLine1Text.length() > 0) {
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		String cityText = mUI.mCityTextField.getText().trim();
+		if (cityText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		String stateText = mUI.mStateTextField.getText().trim();
+		if (stateText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		String zipCodeText = mUI.mZipCodeTextField.getText().trim();
+		if (zipCodeText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		
+		String countryText = mUI.mCountryTextField.getText().trim();
+		if (countryText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		
+		String phonenumberText = mUI.mPhoneNumberTextField.getText().trim();
+		if (phonenumberText.length() > 0) {
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		
+		String emailAddressText = mUI.mEmailAddressTextField.getText().trim();
+		if (emailAddressText.length() > 0) {
+			
+			validation = false;
+			x=x+10;
+			mUI.mProgressBar.setValue(x);
+		}
+		try
+		{
+		if (mUI.mGenderButtonGroup.getSelection().isEnabled()) {
+			validation = false;
+			}
+		} 
+		
+		catch(NullPointerException e)
+		{
+		}
+		return validation;
 	}
 }
    

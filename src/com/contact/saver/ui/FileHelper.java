@@ -51,6 +51,10 @@ public class FileHelper {
 		}
 	}
 
+	/**
+	 * Function of type List Contact to write all the contacts into the file
+	 * @return
+	 */
 	public List<Contact> getAllContacts() {
 		List<Contact> contacts = new ArrayList<Contact>();
 		BufferedReader tr;
@@ -59,7 +63,7 @@ public class FileHelper {
 			tr = new BufferedReader(new FileReader(mFile));
 			while ((line = tr.readLine()) != null) {
 				String[] temp = line.split("\\|");
-				if (temp.length == 10) {
+				if (temp.length == 12) {
 					Character middleInitial = '\u0000';
 					if (temp[2].length() > 0) {
 						middleInitial = temp[2].charAt(0);
@@ -68,9 +72,9 @@ public class FileHelper {
 							middleInitial);
 					ContactAddress contactAddress = new ContactAddress(temp[3],
 							temp[4], temp[5], temp[6],
-							Integer.parseInt(temp[7]));
+							Integer.parseInt(temp[7]), temp[8]);
 					Contact contact = new Contact(contactName, contactAddress,
-							temp[8], Boolean.parseBoolean(temp[9]));
+							temp[9], temp[10], Boolean.parseBoolean(temp[11]));
 					contacts.add(contact);
 				}
 			}

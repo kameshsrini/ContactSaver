@@ -8,15 +8,17 @@ public final class ContactAddress {
     public final String mCity;
     public final String mState;
     public final Integer mZipCode;
+    public final String mCountry;
     
     
  //The parameterized constructor gets the appropriate String and Integer values and assigns it to its member variables
     public ContactAddress(String addressLine1, String addressLine2,
-    		String city, String state, Integer zipcode) {
+    		String city, String state, Integer zipcode, String country) {
     	mAddressLine1 = addressLine1;
     	mAddressLine2 = addressLine2;
     	mCity = city;
     	mState = state;
     	mZipCode = zipcode;
+    	mCountry= country;
     }
 }
