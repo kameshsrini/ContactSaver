@@ -34,7 +34,8 @@ public class FileHelper {
 			mFile = new File(filePathString);
 			if (mFile.exists() && !mFile.isDirectory()) {
 				System.out.println("File exists");
-			} else {
+			} else 
+			{
 				mFile.createNewFile();
 			}
 
